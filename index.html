@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>INHERITANCE & PROTOTYPE</title>
+    <style>
+        body {
+            background-color: rgb(248, 43, 122);
+        }
+
+        pre {
+            color: rgb(0, 201, 33);
+        }
+    </style>
+</head>
+
+<body>
+    <h1 align="center">INHERITANCE & PROTOTYPE HANDSON</h1>
+    <hr />
+
+    <p>
+        <strong>
+            Q.1) Create 2 objects - parent and child. Attach methods to parent and
+            use those methods in child object using parents prototype
+        </strong>
+    </p>
+    <pre>
+        const parent = {
+            hello(){
+                console.log(`Hi I am your Father and you are my child ${this.name} Having age ${this.age} and Job ${this.job}.`);
+            }
+        }
+        
+        const child = Object.create(parent);
+              child.name = 'sunil';
+              child.age = 22;
+              child.job = 'Engineer';
+              
+              child.hello();
+
+        <em>
+        OUTPUT:
+        Hi I am your Father and you are my child sunil Having age 22 and Job Engineer.
+        </em>
+    </pre>
+    <hr />
+    <br />
+
+    <p><strong> Q.2) Write code to explain prototype chaining </strong></p>
+    <pre>
+        const Gfather = {
+            sayHello : function(){
+                console.log('Hey GrandFather!!!');
+            }
+        }
+    
+        const Father = Object.create(Gfather);
+            Father.Hello = function(){
+              console.log('Say Hi to father');
+            }
+          
+        const You = Object.create(Father);
+            You.Hi = function(){
+                console.log('Say Hi to Me!!')
+            }
+            
+        You.sayHello();                              //accessing from the grandparent object
+        You.Hello();                                 //accessing from the Parent object
+
+        <em>
+        OUTPUT:
+        Hey GrandFather!!!
+        Say Hi to father
+
+        </em>
+    </pre>
+    <hr />
+    <br />
+
+    <p>
+        <strong>
+            Q.3) Add a method to calculate sum of all elements in Array in array's
+            prototype, use that method to calculate sum for multiple arrays
+        </strong>
+    </p>
+    <pre>
+        let newArr = new Array(9,37,269);
+        newArr.__proto__.add = function(arr){
+            let count=0;
+            for(let i=0; i < arr.length; i++)
+            {
+                count += arr[i];
+            }
+            return count;
+        }
+
+        let ans = newArr.add(newArr);
+        console.log(ans);
+        
+        <em>
+        OUTPUT:
+        315
+        </em>
+    </pre>
+    <hr />
+    <br />
+
+    <p>
+        <strong>
+            Q.4) Write a JavaScript function to retrieve all the names of object's
+            own and inherited properties.
+        </strong>
+    </p>
+
+    <pre>
+      function kpop(name,group,company,gen,fandom)
+      {
+          this.name = name;
+          this.group = group;
+          this.company = company;
+          this.gen = gen;
+          this.fandom = fandom;
+      }
+      
+      kpop.prototype.name1 = "KPOP";
+      
+      let exo = new kpop("EXO","boy group","SM Ent.","3rd gen","exo-l");
+      let exoSC = Object.create(exo);
+      
+      console.log("2 objects have been created: exo and exoSC");
+      console.log("The value of 'name' property for 'exo'--->",exo.name);
+      console.log("The value of inherited 'name' property for 'exo'--->",exo.name1);
+      console.log("The value of 'name' property inherited from parent for 'exoSC'--->",exoSC.name);
+      console.log("The value of 'name' property inherited from grandparent for 'exo'--->",exoSC.name1);
+      
+      exoSC.name2 = "EXO-SC";
+      console.log("The value of 'name' property for 'exo'--->",exoSC.name2);
+      
+      <em>
+      //OUTPUT:
+      2 objects have been created: exo and exoSC
+      The value of 'name' property for 'exo'---> EXO
+      The value of inherited 'name' property for 'exo'---> KPOP
+      The value of 'name' property inherited from parent for 'exoSC'---> EXO
+      The value of 'name' property inherited from grandparent for 'exo'---> KPOP
+      The value of 'name' property for 'exo'---> EXO-SC
+      </em>
+      </pre>
+</body>
+
+</html>
